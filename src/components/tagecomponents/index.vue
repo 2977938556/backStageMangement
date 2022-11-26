@@ -38,10 +38,6 @@ export default {
       console.log(tagLength, index)
 
 
-
-
-
-
       // 这里判断是删除的元素不等于当前路由的
       if (item.name != this.$route.name) {
         return
@@ -64,8 +60,9 @@ export default {
 
 
     }
-
-
+  },
+  mounted() {
+    // console.log(this.crumbs, "菜单数据")
   }
 
 
@@ -77,7 +74,8 @@ export default {
 <style lang="less" scoped>
 .tag {
   // border: 1px solid red;
-padding: 10px;
+  padding: 10px;
+
   span {
     margin-left: 10px;
   }

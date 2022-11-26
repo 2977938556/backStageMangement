@@ -1,14 +1,12 @@
 <template>
   <div id="Menu">
     <el-row class="tac">
-      <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-        :collapse-transition="false" :collapse="tab" :unique-opened="true" :router="true" background-color="#545c64"
-        text-color="#fff" >
+      <el-menu default-active="2" class="el-menu-vertical-demo" :collapse-transition="false" :collapse="tab"
+        :unique-opened="true" :router="true" background-color="#545c64" text-color="#fff">
         <h3 class="title">{{ tab ? "后台" : "后台管理系统" }}</h3>
         <!--  一级菜单 -->
         <!-- :class="{ colorA: $route.name == item.name }" -->
-        <el-menu-item  @click="clickMenu(item)" :index="item.name"
-          v-for="(item) in menuContain" :key="item.name">
+        <el-menu-item @click="clickMenu(item)" :index="item.name" v-for="(item) in menuContain" :key="item.name">
           <i :class="`el-icon-${item.icon}`"></i>
           <span slot="title">{{ item.label }}</span>
         </el-menu-item>
@@ -33,6 +31,8 @@
 
 
 import { mapState, mapActions } from 'vuex'
+import Cookies from "js-cookie"
+
 
 
 export default {
@@ -43,79 +43,26 @@ export default {
       iscollapse: false,
       active: false,
       // 菜单数据
-      menuList: [
-        {
-          path: '/',
-          name: 'home',
-          label: '首页',
-          icon: 's-home',
-          url: 'Home/Home'
-        },
-        {
-          path: '/mall',
-          name: 'mall',
-          label: '商品管理',
-          icon: 'video-play',
-          url: 'MallManage/MallManage'
-        },
-        {
-          path: '/user',
-          name: 'user',
-          label: '用户管理',
-          icon: 'user',
-          url: 'UserManage/UserManage'
-        },
-        {
-          label: '其他',
-          icon: 'location',
-          children: [
-            {
-              path: '/PageOne',
-              name: 'PageOne',
-              label: '页面1',
-              icon: 'setting',
-              url: 'Other/PageOne'
-            },
-            {
-              path: '/PageTow',
-              name: 'PageTow',
-              label: '页面2',
-              icon: 'setting',
-              url: 'Other/PageTwo'
-            }
-          ]
-        }
-      ],
+      menuList: [],
     }
   },
 
   // 计算属性
   computed: {
-    ...mapState('header', ["tab"]),
+    ...mapState('header', ["tab", "menu"]),
     //01 计算出是否有二级菜单
     menuContain() {
       return this.menuList.filter(item => !item.children)
     },
-    //02 计算出有二级菜单的数据
+    //02 计算出有二级菜单的数据=
     menuNo() {
       return this.menuList.filter(item => item.children)
     }
   },
 
   // 获取数据
-
-
-
-  // 定义的方法
   methods: {
     ...mapActions('header', ["CruMbs"]),
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
 
     // 设置防止重复点击数据
     clickMenu(item) {
@@ -124,14 +71,23 @@ export default {
         this.$router.push(item.path)
       };
 
-
-      // console.log(item)
       // 添加面包屑
       this.CruMbs(item)
 
 
 
     },
+  },
+
+
+
+  mounted() {
+    // 这里是判断没有菜单数据
+    if (!Cookies.get("menu")) {
+      this.menuList = this.menu;
+    } else {
+      this.menuList = JSON.parse(Cookies.get("menu"))
+    }
   }
 }
 

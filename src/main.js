@@ -29,4 +29,7 @@ new Vue({
   router,
   store,
   render: h => h(App),
+  mounted() {
+    store.dispatch("header/DynamicRouter", router)
+  }
 }).$mount('#app')

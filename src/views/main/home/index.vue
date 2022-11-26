@@ -49,8 +49,8 @@
 
                 <!--  支付数据  -->
                 <div class="carl-data">
-                  <p>￥201</p>
-                  <p>今日支付订单</p>
+                  <p>￥{{ item.value }}</p>
+                  <p>{{ item.name }}</p>
                 </div>
 
               </div>
@@ -270,7 +270,6 @@ export default ({
 
   mounted() {
     GetHome().then(res => {
-      console.log(res)
       // 表格数据
       this.tableData = res.data.tableData;
 
@@ -386,7 +385,7 @@ export default ({
         // 右侧图标区域
         .carl-icon {
           width: 100px;
-          // text-align: center;
+          text-align: center;
           line-height: 100px;
           height: 100px;
           font-size: 40px;

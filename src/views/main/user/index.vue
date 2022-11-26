@@ -208,7 +208,7 @@ export default ({
 
       if (types == 1) {
         return GetUserList({ ...this.pageData, ...this.ruleForm }).then(value => {
-          console.log(value)
+          // console.log(value)
           // 将总条数
           this.total = value.count || 0
           this.userList = value.list
@@ -216,7 +216,7 @@ export default ({
 
       } else if (types == 0) {
         return GetUserList({ ...this.pageData }).then(value => {
-          console.log(value)
+          // console.log(value)
           // 将总条数
           this.total = value.count || 0
           this.userList = value.list
@@ -228,8 +228,6 @@ export default ({
 
     },
 
-
-
     // 新增用户
     handerADD() {
       // 0表示新增
@@ -240,7 +238,7 @@ export default ({
     updataUser(row) {
       this.modaType = 1;//按钮类型修改为1
       this.dialogVisible = true;//开启弹窗
-      this.ruleForm = JSON.parse(JSON.stringify(row));
+      this.ruleForm = JSON.parse(JSON.stringify(row)) || "{}";
     },
     // 删除数据
     deleteUser(row) {

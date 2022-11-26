@@ -18,3 +18,9 @@ export let DeleteUser = (data = {}) => $https({ method: "post", url: "/user/dele
 export let BatchUser = (data = {}) => $https({ method: "post", url: "/user/batchUser", data: data })
 // 更新用户
 export let updateUser = (data = {}) => $https({ method: "post", url: "/user/updateUser", data: data })
+
+
+
+
+//登录验证接口
+export let LoginList = (data = {}) => $https({ method: "post", url: "/login/getLogin", data: data })

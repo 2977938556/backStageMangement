@@ -16,12 +16,22 @@
 
     <!-- 头像区域 -->
     <div class="right-header">
-      <span>
+      <!-- <span>
         <a href="#">
           <img src="https://img0.baidu.com/it/u=3999902432,1558470863&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
             alt="">
         </a>
-      </span>
+      </span> -->
+      <el-dropdown trigger="click" :show-timeout="100" @command="handleCommand">
+        <span class="el-dropdown-link">
+          <img src="https://img2.baidu.com/it/u=2360330494,1092108791&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
+            alt="">
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item icon="el-icon-circle-check">个人中心</el-dropdown-item>
+          <el-dropdown-item icon="el-icon-plus" size="mini" command="auto"> 退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
 
   </div>
@@ -31,6 +41,9 @@
 <script>
 
 import { mapActions, mapState } from 'vuex'
+import Cookies from 'js-cookie'
+
+
 
 
 
@@ -41,6 +54,15 @@ export default {
 
   methods: {
     ...mapActions('header', ["ShowMenu"]),
+    handleCommand(e) {
+      if (e == "auto") {
+        Cookies.remove("token");//删除token
+        Cookies.remove("menu");//删除菜单数据
+        this.$router.push('/login')// 跳转路由到登录页
+        window.location.reload();
+      }
+
+    }
   },
   computed: {
     ...mapState('header', ["crumbs"])
@@ -81,6 +103,7 @@ export default {
   width: 100%;
   height: 60px;
   display: flex;
+  // justify-content: space-between;
   justify-content: space-between;
   align-items: center;
   background: #333;
@@ -100,18 +123,19 @@ export default {
 }
 
 
-
 // 处理头像
 .right-header {
+  // border: 1px solid red;
+
   span {
     display: block;
     width: 40px;
     height: 40px;
-    background: gray;
+    background: rgb(206, 206, 206);
     border-radius: 100px;
     overflow: hidden;
     cursor: pointer;
-    margin: 20px 20px 20px 20px;
+    margin: 20px 50px 20px 20px;
 
     img {
       display: block;
